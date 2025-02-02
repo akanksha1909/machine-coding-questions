@@ -14,6 +14,7 @@ user_id = flipfit_system.register_user("Akanksha", "akanksha@gmail.com", "123456
 flipfit_system.view_workouts_for_day("02-02-25")
 
 flipfit_system.book_workout(user_id, 1, 1, "02-02-25")
+flipfit_system.book_workout(user_id, 1, 1, "02-02-25")
 
 flipfit_system.view_user_plan(user_id, "02-02-25")
 

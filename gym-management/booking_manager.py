@@ -15,9 +15,9 @@ class BookingManager:
         slot = center.get_slot_by_id(slot_id)
         for booking in self.bookings.values():
             if (
-                booking.user_id == user.user_id
-                and booking.center_id == center.center_id
-                and booking.slot_id == slot.slot_id
+                booking.user_id == user.id
+                and booking.center_id == center.id
+                and booking.slot_id == slot.id
                 and booking.day == day
             ):
                 print("User has already booked this slot.")
@@ -27,6 +27,7 @@ class BookingManager:
             booking = Booking(user_id, center_id, slot_id, day)
             if slot.book_slot():
                 self.bookings[booking.id] = booking
+                print("Booking Successful!")
                 return booking
             else:
                 print("Failed to book slot")
