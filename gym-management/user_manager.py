@@ -10,4 +10,4 @@ class UserManager:
         return user.id
     
     def get_user(self, id):
-        return self.users[id]
+        return self.users.get(id, None)

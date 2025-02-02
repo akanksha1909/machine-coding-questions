@@ -8,7 +8,7 @@ class FlipFitSystem:
         self.center_manager = CenterManager()
         self.slot_manager = SlotManager()
         self.user_manager = UserManager()
-        self.booking_manager = BookingManager()
+        self.booking_manager = BookingManager(self.user_manager, self.center_manager)
     
     def add_center(self, center_id, name):
         self.center_manager.add_center(center_id, name)
@@ -29,15 +29,12 @@ class FlipFitSystem:
                 print(f"Center ID: {center.id}, Center Name: {center.name}, {slot.capacity}")
 
     def book_workout(self, user_id, center_id, slot_id, day):
-        user = self.user_manager.get_user(user_id)
-        center = self.center_manager.get_center(center_id)
-        slot = center.get_slot_by_id(slot_id)
-        self.booking_manager.book_workout(user, center, slot, day)
+        self.booking_manager.book_workout(user_id, center_id, slot_id, day)
 
     def view_user_plan(self, user_id, day):
         plans = []
         for booking in self.booking_manager.bookings.values():
-            if booking.user.id == user_id and booking.day == day:
+            if booking.user_id == user_id and booking.day == day:
                 plans.append(booking)
 
         for plan in plans:
