@@ -9,4 +9,4 @@ class CenterManager:
         self.centers[id] = center
 
     def get_center(self, id):
-        return self.centers[id]
+        return self.centers.get(id, None)

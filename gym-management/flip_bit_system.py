@@ -25,20 +25,29 @@ class FlipFitSystem:
     
     def view_workouts_for_day(self, day):
         for center in self.center_manager.centers.values():
-            for slot in center.get_slots_for_day().values():
+            slots = center.get_slots_for_day()
+            if not slots:
+                print(f"No slots available for center {center.name}")
+                continue
+        
+            for slot in slots.values():
                 print(f"Center ID: {center.id}, Center Name: {center.name}, {slot.capacity}")
 
     def book_workout(self, user_id, center_id, slot_id, day):
-        self.booking_manager.book_workout(user_id, center_id, slot_id, day)
+        booking = self.booking_manager.book_workout(user_id, center_id, slot_id, day)
+        if booking:
+            print(f"Booking successful: {booking}")
+        else:
+            print("Failed to book workout.")
 
     def view_user_plan(self, user_id, day):
-        plans = []
-        for booking in self.booking_manager.bookings.values():
-            if booking.user_id == user_id and booking.day == day:
-                plans.append(booking)
-
-        for plan in plans:
-            print(f"User booking plan for a day {plan}")
+        bookings = self.booking_manager.get_user_bookings(user_id, day)
+        if not bookings:
+            print("No bookings found for this user on the specified day.")
+            return
+    
+        for booking in bookings:
+            print(f"User booking plan for a day {booking}")
 
 
     def get_center(self, center_id):
